@@ -9,6 +9,16 @@ public class Empleado {
 	
     public float calculoNominaBruta(TipoEmpleado tipo, float ventasMes, float horasExtra) {
     	
+        if (tipo == null) {
+            throw new IllegalArgumentException("El tipo de empleado no puede ser nulo");
+        }
+        if (ventasMes < 0) {
+            throw new IllegalArgumentException("Las ventas no pueden ser negativas");
+        }
+        if (horasExtra < 0) {
+            throw new IllegalArgumentException("Las horas extra no pueden ser negativas");
+        }
+    	
     	float salarioBase;
 
     	if (tipo == TipoEmpleado.ENCARGADO) {
@@ -32,6 +42,10 @@ public class Empleado {
     }
 
     public float calculoNominaNeta(float nominaBruta) {
+        if (nominaBruta < 0) {
+            throw new IllegalArgumentException("La nómina bruta no puede ser negativa");
+        }
+
         float retencion;
         if (nominaBruta <= 2100) {
             retencion = 0f;

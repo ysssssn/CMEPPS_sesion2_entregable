@@ -112,4 +112,45 @@ class EmpleadoTest {
         float resultado = empleado.calculoNominaNeta(2501);
         assertEquals(2050.82f, resultado, 0.01f);
     }
+    
+    @Test
+    void vendedorCobraSalarioBase() {
+    	System.out.println("Vendedor sin ventas ni horas extra cobra el salario base de 2000");
+        float resultado = empleado.calculoNominaBruta(TipoEmpleado.VENDEDOR, 0, 0);
+        assertEquals(2000, resultado, 0.01f);
+    }
+
+    @Test
+    void nominaBrutaCeroDevuelveCero() {
+    	System.out.println("Nómina bruta 0 devuelve neto 0");
+        assertEquals(0, empleado.calculoNominaNeta(0), 0.01f);
+    }
+
+    @Test
+    void ventasNegativasLanzanExcepcion() {
+    	System.out.println("Ventas negativas lanzan excepción");
+        assertThrows(IllegalArgumentException.class,
+            () -> empleado.calculoNominaBruta(TipoEmpleado.VENDEDOR, -1, 0));
+    }
+
+    @Test
+    void horasExtraNegativasLanzanExcepcion() {
+    	System.out.println("Horas extra negativas lanzan excepción");
+        assertThrows(IllegalArgumentException.class,
+            () -> empleado.calculoNominaBruta(TipoEmpleado.VENDEDOR, 0, -1));
+    }
+
+    @Test
+    void tipoNuloLanzaExcepcion() {
+    	System.out.println("Tipo de empleado nulo lanza excepción");
+    	assertThrows(IllegalArgumentException.class,
+            () -> empleado.calculoNominaBruta(null, 0, 0));
+    }
+
+    @Test
+    void nominaBrutaNegativaLanzaExcepcion() {
+    	System.out.println("Nómina bruta negativa lanza excepción en el neto");
+        assertThrows(IllegalArgumentException.class,
+            () -> empleado.calculoNominaNeta(-1));
+    }
 }
